@@ -1,0 +1,14 @@
+{
+  "name": "drag-drop-text",
+  "main": "./lib/drag-drop-text",
+  "version": "0.1.0",
+  "description": "Standard text dragging and dropping with mouse",
+  "repository": "https://github.com/mark-hahn/drag-drop-text",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.170.0"
+  },
+  "dependencies": {
+    "sub-atom": "*"
+  }
+}
