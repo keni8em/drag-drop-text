@@ -9,6 +9,7 @@
     "atom": ">0.170.0"
   },
   "dependencies": {
-    "sub-atom": "*"
+    "sub-atom": "*",
+    "jquery": "^2.0.0"
   }
 }
