@@ -21,23 +21,29 @@ class DragDropText
           subscribeToAllEditors()
 
   mousedown: (e, editor, lines) ->
-    selection = editor.getLastSelection()
-    bufRange = selection.marker.bufferMarker.range
-    if not bufRange.isEmpty()
-      line = lines.querySelector ".line[data-screen-row=\"#{bufRange.start.row}\"]"
-      {top:linTop, bottom:linBot} = line.getBoundingClientRect() 
-      {top:tgtTop, bottom:tgtBot} = e.target.getBoundingClientRect() 
-      if not (tgtBot <= linTop or tgtTop >= linBot)
-        console.log 'in line'
-        @active = yes
-        @mouseTimeout = setTimeout =>
-          @mouseTimeout = null
-          @marker = editor.markBufferRange bufRange
-          dm = editor.decorateMarker @marker, type:'highlight', class:'drag-drop-text'
-          console.log 'mouse held', bufRange, @marker, dm
-          @isDragging  = yes
-        , 1000
-        
+    oldBufRange = editor.getLastSelection().marker.bufferMarker.range
+    @active = yes
+    @mouseTimeout = setTimeout =>
+      @mouseTimeout = null
+      bufRange  = editor.getLastSelection().marker.bufferMarker.range
+      if bufRange.isEmpty() then bufRange = oldBufRange
+      if not bufRange.isEmpty()
+        linesTop = null
+        for row in [bufRange.start.row..bufRange.end.row]
+          if (line = lines.querySelector ".line[data-screen-row=\"#{row}\"]")
+            rect = line.getBoundingClientRect() 
+            linesTop ?= rect.top
+            linesBot =  rect.bottom
+        if linesTop
+          {top, bottom} = e.target.getBoundingClientRect()
+          if top >= linesTop and bottom <= linesBot
+            @marker = editor.markBufferRange bufRange
+            dm = editor.decorateMarker @marker, type:'highlight', class:'drag-drop-text'
+            console.log 'mouse held', bufRange
+            # console.log '.drag-drop-text', atom.views.getView(editor).shadowRoot.querySelector '.drag-drop-text'
+            @isDragging  = yes
+    , 1000
+    
   clear: -> 
     @active = @isDragging = no
     if @mouseTimeout 
