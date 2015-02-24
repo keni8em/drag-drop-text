@@ -47,8 +47,12 @@ class DragDropText
               top <= pageY < bottom
             inSelection = yes
             break
-      atom.commands.dispatch @editorView, (if inSelection then 'core:copy' else 'core:paste')
-      if not inSelection then @clear(); return
+      if not inSelection 
+        atom.commands.dispatch @editorView, 'core:paste'
+        @clear()
+        return
+      text = @editor.getTextInBufferRange @bufRange
+      atom.clipboard.write text
       @selected = yes
       @marker = @editor.markBufferRange @bufRange
       @editor.decorateMarker @marker, type:'highlight', class:'drag-drop-text'
