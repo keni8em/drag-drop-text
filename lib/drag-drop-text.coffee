@@ -16,9 +16,13 @@ class DragDropText
     @subs = new SubAtom
     @subs.add atom.workspace.observeTextEditors (editor) =>
       lines = atom.views.getView(editor).shadowRoot.querySelector '.lines'
-      @subs.add lines,     'mousedown', (e) => @mousedown e, editor, lines
-      @subs.add $('body'), 'mouseup',   (e) => if @active then @clear()
-      @subs.add lines,     'mousemove', (e) => 
+      
+      @subs.add $('body'), 'mouseup', (e) => if @active then @clear()
+      
+      @subs.add lines, 'mousedown', editor, 'onDidDestroy', (e) => 
+        @mousedown e, editor, lines
+        
+      @subs.add lines, 'mousemove', editor, 'onDidDestroy', (e) => 
         if @selected then @drag() else @clear()
 
   getSelection: ->
