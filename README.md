@@ -2,6 +2,14 @@
 
 Drag and drop text (and cut/copy/paste) with only the mouse. No keyboard is needed, not even the modifier keys.
 
+---
+
+*Are you looking for just a simple drag and drop?*
+
+There is a sister package to this one, `simple-drag-drop-text`. It has less features but it is simpler to use and follows the standard drag/drop behavior of other editors.
+
+---
+
 No keys were pressed when making this gif ...
 
 ![Image inserted by Atom editor package auto-host-markdown-image](http://i.imgur.com/P5ly4Dq.gif)
