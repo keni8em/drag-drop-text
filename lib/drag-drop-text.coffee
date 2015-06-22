@@ -26,7 +26,7 @@ class DragDropText
         if @selected then @drag() else @clear()
 
   getSelection: ->
-    bufRange = @editor.getLastSelection().marker.bufferMarker.range
+    bufRange = @editor.getLastSelection().marker.getBufferRange()
     if not bufRange.isEmpty()
       @bufRange = bufRange
       @regionRects = []
@@ -82,7 +82,7 @@ class DragDropText
   
   drop: ->
     selection = @editor.getLastSelection()
-    range     = selection.marker.bufferMarker.range
+    range     = selection.marker.getBufferRange()
     cursorPos = range.start
     selection.setBufferRange [cursorPos, cursorPos]
     atom.commands.dispatch @editorView, 'core:paste' 
