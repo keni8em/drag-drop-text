@@ -1,7 +1,7 @@
 {
   "name": "drag-drop-text",
   "main": "./lib/drag-drop-text",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Drag and drop text (and cut/copy/paste) with only the mouse.",
   "repository": "https://github.com/mark-hahn/drag-drop-text",
   "license": "MIT",
