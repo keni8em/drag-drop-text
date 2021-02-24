@@ -11,18 +11,18 @@ class DragDropText
       title: 'Mouse Hold Delay (MS)'
       type:'integer'
       default: 750
-      
+
   activate: ->
     @subs = new SubAtom
     @subs.add atom.workspace.observeTextEditors (editor) =>
-      lines = atom.views.getView(editor).shadowRoot.querySelector '.lines'
-      
+      lines = atom.views.getView(editor).querySelector '.lines'
+
       @subs.add $('body'), 'mouseup', (e) => if @active then @clear()
-      
-      @subs.add lines, 'mousedown', editor, 'onDidDestroy', (e) => 
+
+      @subs.add lines, 'mousedown', editor, 'onDidDestroy', (e) =>
         @mousedown e, editor, lines
-        
-      @subs.add lines, 'mousemove', editor, 'onDidDestroy', (e) => 
+
+      @subs.add lines, 'mousemove', editor, 'onDidDestroy', (e) =>
         if @selected then @drag() else @clear()
 
   getSelection: ->
@@ -32,7 +32,7 @@ class DragDropText
       @regionRects = []
       $(@lines).find('.highlights .highlight.selection .region').each (__, ele) =>
         @regionRects.push ele.getBoundingClientRect()
-    
+
   mousedown: (e, @editor, @lines) ->
     @active = yes
     @bufRange = null
@@ -51,7 +51,7 @@ class DragDropText
               top <= pageY < bottom
             inSelection = yes
             break
-      if not inSelection 
+      if not inSelection
         atom.commands.dispatch @editorView, 'core:paste'
         @clear()
         return
@@ -67,32 +67,32 @@ class DragDropText
     , holdDelay
 
   clearTimeouts: ->
-    if @mouseTimeout 
+    if @mouseTimeout
       clearTimeout @mouseTimeout
       @mouseTimeout = null
-    if @mouseTimeout2 
+    if @mouseTimeout2
       clearTimeout @mouseTimeout2
       @mouseTimeout2 = null
-    
+
   drag: ->
     @isDragging = yes
     selection = @editor.getLastSelection()
     process.nextTick -> selection.clear()
     @clearTimeouts()
-  
+
   drop: ->
     selection = @editor.getLastSelection()
     range     = selection.marker.getBufferRange()
     cursorPos = range.start
     selection.setBufferRange [cursorPos, cursorPos]
-    atom.commands.dispatch @editorView, 'core:paste' 
-    
-  clear: -> 
+    atom.commands.dispatch @editorView, 'core:paste'
+
+  clear: ->
     if @isDragging then @drop()
     @clearTimeouts()
     @active = @selected = @isDragging = no
     @marker?.destroy()
-    
+
   deactivate: ->
     @clear()
     @subs.dispose()

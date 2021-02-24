@@ -1,3 +1,9 @@
+## 1.0.0 - 24 Feb 2021 - keni8em
+* release under new ownership
+* cleaned up 2 syntax issues which became deprecated after 'Atom v1.13.0'
+* [1] removed '::shadow' from line 1 of '/styles/drag-drop-text.less'
+* [2] removed '.shadowRoot' from line 18 of '/lib/drag-drop-text.coffee'
+
 ## 0.1.4 - 6/22/15
 * changed stylesheets/ to styles/
 
