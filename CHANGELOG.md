@@ -1,3 +1,6 @@
+## 1.0.1 - 24 Feb 2021 - keni8em
+* changed jquery dependancy to >=3.5.0 to address prior version vulnerabilities 
+
 ## 1.0.0 - 24 Feb 2021 - keni8em
 * release under new ownership
 * cleaned up 2 syntax issues which became deprecated after 'Atom v1.13.0'
